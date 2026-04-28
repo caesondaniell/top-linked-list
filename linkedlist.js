@@ -32,7 +32,7 @@ export class LinkedList {
       counter++
       tmp = tmp.nextNode
     }
-    return ++counter
+    return tmp === null ? counter : ++counter
   }
 
   head () {
@@ -99,5 +99,46 @@ export class LinkedList {
       tmp = tmp.nextNode
     }
     return string
+  }
+
+  insertAt (index, ...vals) {
+    if (index < 0 || index > this.size()) {
+      throw new RangeError('Out of bounds!')
+    }
+
+    const values = [...vals]
+    if (this.listhead === null || index === 0) {
+      for (let i = values.length - 1; i >= 0; i--) {
+        this.prepend(values[i])
+      }
+    } else if (index === this.size()) {
+      values.forEach((value) => this.append(value))
+    } else {
+      let startNode = this.listhead
+      for (let i = 0; i < index - 1; i++) {
+        startNode = startNode.nextNode
+      }
+      const endNode = startNode.nextNode
+      values.forEach((value) => {
+        startNode.nextNode = new Node(value)
+        startNode = startNode.nextNode
+      })
+      startNode.nextNode = endNode
+    }
+  }
+
+  removeAt (index) {
+    if (index < 0 || index > this.size() - 1) {
+      throw new RangeError('Out of bounds!')
+    }
+    if (index === 0) {
+      this.listhead = this.listhead.nextNode
+    } else {
+      let tmp = this.listhead
+      for (let i = 0; i < index - 1; i++) {
+        tmp = tmp.nextNode
+      }
+      tmp.nextNode = tmp.nextNode.nextNode
+    }
   }
 }
