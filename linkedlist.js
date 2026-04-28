@@ -28,11 +28,11 @@ export class LinkedList {
   size () {
     let counter = 0
     let tmp = this.listhead
-    while (tmp !== null && tmp.nextNode !== null) {
+    while (tmp !== null) {
       counter++
       tmp = tmp.nextNode
     }
-    return tmp === null ? counter : ++counter
+    return counter
   }
 
   head () {
